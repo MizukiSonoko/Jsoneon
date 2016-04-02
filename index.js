@@ -1,3 +1,4 @@
+var url =require('url');
 var fs = require('fs');
 var renderInfo = false;
 var renderGenerate = false;
@@ -115,9 +116,10 @@ module.exports = {
     blocks: {
 			jsoneon: {
 				process: function(block) {
-					if(block.args.length == 1){
+					console.log(this.book.root);
+					if("src" in block.kwargs){
 						var json = require(
-							fs.realpathSync('./json/')+'/'+block.args[0]
+							this.book.root +'/'+ block.kwargs.src
 						);
 						var result = "";
 						if(renderInfo){
