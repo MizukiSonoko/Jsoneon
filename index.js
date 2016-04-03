@@ -49,7 +49,15 @@ function parseElement( name, obj){
 	}
 	return result;
 }
-function parseElements(obj){
+function parseElements(obj, type){
+	if(type === "RDB"){
+		return creteTable(obj);
+	}else if(type === "KVS"){
+		return createJsonCode(obj);
+	}
+	return "Unknown type";
+}
+function createTable(obj){
 	var result = '<table>\n';
 	result += '<tr>'; 
 	for(i = 0;i < col.length;i++){
@@ -63,6 +71,18 @@ function parseElements(obj){
 		}
 	}
 	result += '</table>';
+	return result;
+}
+function createJsonCode(obj){
+	var res={};
+	for(key in obj){
+		if(obj.hasOwnProperty(key)) {
+			res[key] = obj[key].sample;
+		}
+	}
+	var result = '<pre><code class="json">';
+	result += JSON.stringify(res, null, "	 ");
+	result += '</code></pre>';
 	return result;
 }
 
@@ -116,7 +136,6 @@ module.exports = {
     blocks: {
 			jsoneon: {
 				process: function(block) {
-					console.log(this.book.root);
 					if("src" in block.kwargs){
 						var json = require(
 							this.book.root +'/'+ block.kwargs.src
@@ -125,7 +144,7 @@ module.exports = {
 						if(renderInfo){
 							result += parseMeta(json.meta);
 						}
-						result += parseElements(json.elements);
+						result += parseElements(json.elements, json.meta.type);
 						if(renderGenerate){
 							result += createSQL(json.meta.name);
 						}
