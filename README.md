@@ -5,7 +5,7 @@
 In book.json  
 ```json
 {
-  "plugins": ["jsoneon"],
+  "plugins": ["jsoneon"]
 }
 ```
 
