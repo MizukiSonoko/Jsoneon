@@ -73,15 +73,22 @@ function createTable(obj){
 	result += '</table>';
 	return result;
 }
-function createJsonCode(obj){
+function expandEntity(obj){
 	var res={};
 	for(key in obj){
 		if(obj.hasOwnProperty(key)) {
-			res[key] = obj[key].sample;
+			if(obj[key].type === "dictionary"){
+				res[key] = expandEntity(obj[key].members);
+			}else{
+				res[key] = obj[key].sample;
+			}
 		}
 	}
+	return res;
+}
+function createJsonCode(obj){
 	var result = '<pre><code class="json">';
-	result += JSON.stringify(res, null, "	 ");
+	result += JSON.stringify(expandEntity(obj), null, "	 ");
 	result += '</code></pre>';
 	return result;
 }
