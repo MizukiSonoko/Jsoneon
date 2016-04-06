@@ -5,7 +5,12 @@
 In book.json  
 ```json
 {
-  "plugins": ["jsoneon"]
+  "plugins": ["jsoneon"],
+	"pluginsConfig": {
+		"jsoneon": {
+			"render" : ["info"]
+		}
+	}
 }
 ```
 
@@ -13,6 +18,7 @@ In book.json
 # Usage
 
 ### 1 create directory to gitbook directory.
+directory name is free.
 ```
 mkdir json
 ```
@@ -68,21 +74,7 @@ mkdir json
 
 ### 3 Write in bar.md
 ```
-{% jsoneon "foo.json" %}
+{% jsoneon src="json/foo.json" %}
 {% endjsoneon %}
 ```
 
-### Config
-
-In book.json  
-
-```json
-{
-  "plugins": ["jsoneon"],
-	"pluginsConfig": {
-		"jsoneon": {
-			"render" : ["info"]
-		}
-	}
-}
-```
