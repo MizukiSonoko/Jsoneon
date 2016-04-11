@@ -5,6 +5,17 @@ var renderGenerate = false;
 
 var col = ['name','type','isOptional','primary key','description']; 
 
+function wrapTdOpt(o,def,opt){
+	if(o === undefined){
+		// undefinedではなく別の文字にしてもいいかも
+		return '<td>'+def+'</td>';	
+	}
+	if(opt){
+		return '<td align="'+opt+'">'+o+'</td>';
+	}
+	return '<td>'+o+'</td>';
+}
+
 // ElementsRender系
 function wrapTd(o,opt){
 	if(o === undefined){
@@ -32,7 +43,7 @@ function parseElement( name, obj){
 	var result = wrapTd(name);
 	// colに対応した要素を追加していく
 	result += wrapTd(obj.type);
-	result += wrapTd(obj.isOptional);
+	result += wrapTdOpt(obj.isOptional, "false");
 
 	if(isPrimaryKey(obj)){
 		result += wrapTd("O","center");
@@ -40,7 +51,7 @@ function parseElement( name, obj){
 		result += wrapTd(" ");
 	}
 
-	result += wrapTd(obj.description);
+	result += wrapTdOpt(obj.description, " ");
 	if(obj.type === "dictionary"){
 		result += '</tr><tr>';
 		for(k in obj.members){
@@ -51,7 +62,7 @@ function parseElement( name, obj){
 }
 function parseElements(obj, type){
 	if(type === "RDB"){
-		return creteTable(obj);
+		return createTable(obj);
 	}else if(type === "KVS"){
 		return createJsonCode(obj);
 	}
