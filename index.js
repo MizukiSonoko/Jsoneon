@@ -39,6 +39,7 @@ function isPrimaryKey(obj){
 	}
 	return false;
 }	
+
 function parseElement( name, obj){
 	var result = wrapTd(name);
 	// colに対応した要素を追加していく
@@ -57,9 +58,17 @@ function parseElement( name, obj){
 		for(k in obj.members){
 			result += parseElement(name+'.'+k, obj.members[k]) + '</tr>';
 		}
+	}else if(obj.type === "array"){
+  	for(var i =0;i < obj.members.length;i++){
+			result += wrapTd("");
+			result += wrapTd(obj.members[i]);
+			result += wrapTd("");
+			result += wrapTd("") + '</tr>';
+		}
 	}
 	return result;
 }
+
 function parseElements(obj, type){
 	if(type === "RDB"){
 		return createTable(obj);
@@ -84,6 +93,7 @@ function createTable(obj){
 	result += '</table>';
 	return result;
 }
+
 function expandEntity(obj){
 	var res={};
 	for(key in obj){
@@ -97,6 +107,7 @@ function expandEntity(obj){
 	}
 	return res;
 }
+
 function createJsonCode(obj){
 	var result = '<pre><code class="json">';
 	result += JSON.stringify(expandEntity(obj), null, "	 ");
