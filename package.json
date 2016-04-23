@@ -1,6 +1,6 @@
 {
     "name": "gitbook-plugin-jsoneon",
-    "version": "0.0.4",
+    "version": "0.0.7",
     "description": "This is table creating GitBook plugin",
     "engines": {
         "gitbook": ">1.x.x"
